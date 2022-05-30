@@ -51,6 +51,8 @@ dependencies {
     // android + ktx
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines_android}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle_viewmodel_ktx}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment_ktx}"
+    implementation "androidx.activity:activity-ktx:${versions.activity_ktx}"
 
     // third part libs
     implementation "com.google.code.gson:gson:${versions.gson}"
