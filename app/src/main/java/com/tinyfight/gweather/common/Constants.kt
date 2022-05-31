@@ -7,4 +7,4 @@ package com.tinyfight.gweather.common
  */
 
 const val DARK_API_KEY = "37788829244c9eb24dfea7e860e00e69"
-const val NETWORK_BASE_URL = "https://api.darksky.net/forecast/${DARK_API_KEY}"
+const val NETWORK_BASE_URL = "https://api.darksky.net/forecast/${DARK_API_KEY}/"

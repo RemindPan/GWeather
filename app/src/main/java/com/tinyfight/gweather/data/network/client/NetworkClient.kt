@@ -1,4 +1,4 @@
-package com.tinyfight.gweather.data.network
+package com.tinyfight.gweather.data.network.client
 
 import com.tinyfight.gweather.data.network.header.NetworkHeader
 import com.tinyfight.gweather.data.network.header.NetworkHeaderInterceptor
@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author Yao
  * Name com.tinyfight.gweather.data.network.NetworkApiFactory
  */
-@Suppress("unused")
+
 class NetworkClient private constructor(private val startArgs: StartArgs) {
     private var retrofit: Retrofit
 

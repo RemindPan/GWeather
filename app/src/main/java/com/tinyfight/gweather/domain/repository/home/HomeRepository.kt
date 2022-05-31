@@ -1,7 +1,7 @@
 package com.tinyfight.gweather.domain.repository.home
 
 import com.tinyfight.gweather.data.network.Result
-import com.tinyfight.gweather.data.vo.WeatherResponseVO
+import com.tinyfight.gweather.domain.model.WeatherResponseVO
 
 /**
  * Create at 2022/5/30

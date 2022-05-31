@@ -1,7 +1,6 @@
 package com.tinyfight.gweather.data.network
 
 import android.util.Log
-import com.tinyfight.gweather.data.vo.VO
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

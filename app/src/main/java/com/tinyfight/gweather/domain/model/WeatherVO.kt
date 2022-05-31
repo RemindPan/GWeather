@@ -1,4 +1,4 @@
-package com.tinyfight.gweather.data.vo
+package com.tinyfight.gweather.domain.model
 
 import com.google.gson.annotations.SerializedName
 

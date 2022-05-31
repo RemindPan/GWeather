@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GWeather</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="gps_error_title">No gps available in you device</string>
+    <string name="gps_error_sub_title">Sorry, you turn off the gps in the phone, please open to use app.</string>
+
+    <string name="location_permission_error_title">Location permission is denied</string>
+    <string name="location_permission_error_sub_title">Sorry, you deny the location permission to app, please grant it before you use app</string>
+
+    <string name="high_temperature">High: %s</string>
+    <string name="low_temperature">Low: %s</string>
 </resources>
