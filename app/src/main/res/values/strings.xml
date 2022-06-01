@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GWeather</string>
-    <string name="cancel">Cancel</string>
-    <string name="confirm">Confirm</string>
+    <string name="cancel">Don\'t Allow</string>
+    <string name="confirm">Allow</string>
     <string name="gps_error_title">No gps available in you device</string>
     <string name="gps_error_sub_title">Sorry, you turn off the gps in the phone, please open to use app.</string>
 
