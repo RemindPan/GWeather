@@ -10,12 +10,12 @@ import java.util.*
  */
 fun Long.timeStampToDate(): String {
     val ms = this * 1000L
-    return SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).format(ms)
+    return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(ms)
 }
 
 fun Long.timeStampToMinute(): String {
     val ms = this * 1000L
-    return SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA).format(ms)
+    return SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(ms)
 }
 
 fun Long.timeStampGetHour(): Int {
