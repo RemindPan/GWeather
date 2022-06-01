@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
  * Create at 2022/5/30
  * @author Yao
  * Name com.tinyfight.gweather.data.vo.WeatherVO
+ * This is business entity which defined by server (api side)
  */
 @Suppress("unused")
 data class WeatherResponseVO(

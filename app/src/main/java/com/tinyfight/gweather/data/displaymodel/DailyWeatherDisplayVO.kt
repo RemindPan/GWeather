@@ -8,6 +8,8 @@ import com.tinyfight.gweather.domain.model.VO
  * Create at 2022/5/31
  * @author Yao
  * Name com.tinyfight.gweather.data.model.DailyWeatherDisplayVO
+ * This is view display entity which depend on domain/vo/weathervo,
+ * will convert business entity to display entity for UI display
  */
 data class DailyWeatherDisplayVO(
     val highTemperature: Double,

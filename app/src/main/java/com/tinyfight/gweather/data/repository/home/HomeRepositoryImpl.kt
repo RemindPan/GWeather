@@ -10,6 +10,7 @@ import com.tinyfight.gweather.domain.repository.home.HomeRepository
  * Create at 2022/5/30
  * @author Yao
  * Name com.tinyfight.gweather.data.repository.home.HomeRepositoryImpl
+ * This is impl class for repository which defined in domain/repository
  */
 class HomeRepositoryImpl : HomeRepository {
     override suspend fun getWeatherByLocation(

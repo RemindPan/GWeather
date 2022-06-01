@@ -10,6 +10,7 @@ import com.tinyfight.gweather.domain.repository.detail.DetailRepository
  * Create at 2022/5/30
  * @author Yao
  * Name com.tinyfight.gweather.data.repository.detail.DetailRepositoryImpl
+ * This is impl class for repository which defined in domain/repository
  */
 class DetailRepositoryImpl : DetailRepository {
     override suspend fun requestHourlyWeather(
