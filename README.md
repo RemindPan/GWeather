@@ -3,16 +3,11 @@
 * This is a assignment weather demo app.
 * Apply clean architecture + MVVM as project architecture
 
-### Architeture
+### Architecture
 
-Feature -> data -> domain
-|                  ∧
-|                  |
-|                  |
--------------------
-|
-V
-common
+feature -> data -> domain
+feature -> domain
+feature -> common
 
 
 ### Statement
