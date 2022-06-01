@@ -1,7 +1,6 @@
 package com.tinyfight.gweather.feature.home.view
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
 import com.tinyfight.gweather.R
 import com.tinyfight.gweather.common.base.ViewBindingActivity

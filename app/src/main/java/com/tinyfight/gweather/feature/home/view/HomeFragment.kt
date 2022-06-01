@@ -1,18 +1,18 @@
 package com.tinyfight.gweather.feature.home.view
 
+import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tinyfight.gweather.R
 import com.tinyfight.gweather.common.base.LocationFragment
-import com.tinyfight.gweather.common.location.LocationSupport
 import com.tinyfight.gweather.common.viewmodel.ViewModelFactory
 import com.tinyfight.gweather.databinding.FragmentHomeBinding
+import com.tinyfight.gweather.feature.detail.view.DetailActivity
 import com.tinyfight.gweather.feature.home.viewmodel.HomeViewModel
 import com.tinyfight.gweather.feature.home.widget.DayRecyclerViewAdapter
 import com.tinyfight.gweather.feature.util.mapIconToDrawable
@@ -25,7 +25,6 @@ import com.tinyfight.gweather.feature.util.mapIconToDrawable
 class HomeFragment : LocationFragment<FragmentHomeBinding>() {
     private val mainViewModel by viewModels<HomeViewModel> { ViewModelFactory(this) }
     private val adapter = DayRecyclerViewAdapter()
-    private var firstResume = true
 
     override fun bindingInflate(
         layoutInflater: LayoutInflater,
@@ -41,33 +40,16 @@ class HomeFragment : LocationFragment<FragmentHomeBinding>() {
         initViews()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (firstResume) {
-            firstResume = false
-        }
-
-        if (!firstResume) {
-            requestLocation()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LocationSupport.instance.onPagePause()
-    }
-
-    override fun onLocationPermissionGranted() {
-        LocationSupport.instance.getLocation(::onLocationRequested)
-    }
-
     private fun initViews() {
         binding.dayList.isNestedScrollingEnabled = false
         binding.dayList.adapter = adapter
         binding.dayList.layoutManager = LinearLayoutManager(context)
+        binding.currentContainer.setOnClickListener {
+            startActivity(Intent(context, DetailActivity::class.java))
+        }
     }
 
-    private fun onLocationRequested(location: Location) {
+    override fun onLocationRequestAction(location: Location) {
         mainViewModel.getWeatherByLocation(location.latitude, location.latitude)
     }
 
@@ -83,7 +65,15 @@ class HomeFragment : LocationFragment<FragmentHomeBinding>() {
                 displayVO.currentWeatherDisplayVO.lowTemperature.toString())
             binding.weatherIcon.setImageResource(mapIconToDrawable(displayVO.currentWeatherDisplayVO.icon))
 
-            adapter.dailyWeatherList = displayVO.dailyWeatherDisplayVOList
+            adapter.dailyWeatherDisplayList = displayVO.dailyWeatherDisplayVOList
+        }
+
+        mainViewModel.loadingLiveData.observe(viewLifecycleOwner) {
+            binding.progressBar.visibility = if (it) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 

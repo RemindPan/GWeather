@@ -20,10 +20,8 @@ class LocationSupport private constructor() {
     private val locationManager = GWeatherApplication.application
         .getSystemService(LOCATION_SERVICE) as LocationManager
 
-    private val oneTimeLocationListener = OneTimeLocationListener(locationManager)
-
     @SuppressLint("MissingPermission")
-    fun getLocation(callback1: Callback1<Location>) {
+    fun getLocation(locationListener: OneTimeLocationListener) {
         val criteria = Criteria().apply {
             accuracy = Criteria.ACCURACY_FINE
             powerRequirement = Criteria.POWER_LOW
@@ -33,22 +31,45 @@ class LocationSupport private constructor() {
 
         val provider = locationManager.getBestProvider(criteria, true) ?: return
 
-        val oldLocation = locationManager.getLastKnownLocation(provider)
-        oldLocation?.let {
-            callback1.invoke(it)
-        }
-
         // This way is too slow to get, should better replace with third part map lib
-        oneTimeLocationListener.setCallback(callback1)
+        locationListener.setLocationManager(locationManager)
         locationManager.requestLocationUpdates(provider,
             1000,
             1F,
-            oneTimeLocationListener)
+            locationListener)
+
+        val bestLocation = locationManager.getLastKnownLocation(provider)
+        val fastLocation = getLastKnowLocationFast()
+        if (bestLocation != null && fastLocation != null) {
+            if (bestLocation.accuracy < fastLocation.accuracy) {
+                locationListener.callback1.invoke(bestLocation)
+            } else {
+                locationListener.callback1.invoke(fastLocation)
+            }
+        } else if (bestLocation != null) {
+            locationListener.callback1.invoke(bestLocation)
+        } else if (fastLocation != null) {
+            locationListener.callback1.invoke(fastLocation)
+        }
     }
 
-    fun onPagePause() {
-        locationManager.removeUpdates(oneTimeLocationListener)
+    fun removeListener(locationListener: OneTimeLocationListener) {
+        locationManager.removeUpdates(locationListener)
     }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastKnowLocationFast(): Location? {
+        var location: Location? = null
+        val providers = locationManager.getProviders(true)
+        for (provider in providers) {
+            val lastKnowLocation = locationManager.getLastKnownLocation(provider) ?: continue
+            if (location == null || lastKnowLocation.accuracy < location.accuracy) {
+                location = lastKnowLocation
+            }
+        }
+        return location
+    }
+
 
     companion object {
         val instance by lazy {
@@ -58,16 +79,16 @@ class LocationSupport private constructor() {
 }
 
 class OneTimeLocationListener(
-    private val locationManager: LocationManager,
+    val callback1: Callback1<Location>,
 ) : LocationListener {
-    private var callback1: Callback1<Location>? = null
+    private var locationManager: LocationManager? = null
 
-    fun setCallback(callback1: Callback1<Location>) {
-        this.callback1 = callback1
+    fun setLocationManager(locationManager: LocationManager) {
+        this.locationManager = locationManager
     }
 
     override fun onLocationChanged(location: Location) {
-        callback1?.invoke(location)
-        locationManager.removeUpdates(this)
+        callback1.invoke(location)
+        locationManager?.removeUpdates(this)
     }
 }

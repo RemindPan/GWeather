@@ -1,6 +1,5 @@
 package com.tinyfight.gweather.data.network
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,13 +39,10 @@ suspend inline fun <reified T : Any> safeApiCall(
                 Result.Fail(error)
             }
         } catch (cancel: CancellationException) {
-            Log.d("NetWorkError", "CancellationException ${cancel.message}")
             Result.Fail(ApiError(CODE_UNKNOWN, cancel.message))
         } catch (ex: HttpException) {
-            Log.d("NetWorkError", "HttpException ${ex.message()}")
             Result.Fail(ApiError(ex.code().toString(), ex.message()))
         } catch (ex: Exception) {
-            Log.d("NetWorkError", "Exception ${ex.message}")
             Result.Fail(ApiError(CODE_UNKNOWN, ex.message))
         }
     }

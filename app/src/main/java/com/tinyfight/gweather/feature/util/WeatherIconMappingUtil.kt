@@ -1,6 +1,5 @@
 package com.tinyfight.gweather.feature.util
 
-import android.graphics.drawable.Drawable
 import com.tinyfight.gweather.R
 
 /**

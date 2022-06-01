@@ -16,7 +16,7 @@ interface GWeatherApi {
     suspend fun getWeatherByLocation(
         @Path("latitude") latitude: Double,
         @Path("longitude") longitude: Double,
-        @Query("exclude") list: List<String> = listOf("flags"),
+        @Query("exclude") excludeList: List<String> = listOf("flags, alerts, minutely"),
     ): WeatherResponseVO
 
     companion object {

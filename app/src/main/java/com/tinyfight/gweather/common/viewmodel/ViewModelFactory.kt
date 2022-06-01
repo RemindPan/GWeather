@@ -1,5 +1,3 @@
-@file:Suppress("UNCHECKED_CAST")
-
 package com.tinyfight.gweather.common.viewmodel
 
 import android.os.Bundle
@@ -18,6 +16,7 @@ import java.lang.IllegalArgumentException
  * @author Yao
  * Name com.tinyfight.gweather.common.viewmodel.ViewModelFactory
  */
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null,

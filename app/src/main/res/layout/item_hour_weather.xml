@@ -2,19 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/hourItemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/day"
+        android:id="@+id/hour"
         style="@style/Text18_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:minWidth="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Today" />
+        tools:text="12" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/weatherIcon"
@@ -22,29 +24,18 @@
         android:layout_height="24dp"
         android:layout_marginStart="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/day"
+        app:layout_constraintStart_toEndOf="@id/hour"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/highTemp"
+        android:id="@+id/temperature"
         style="@style/Text16_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:minWidth="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/weatherIcon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="30" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/lowTemp"
-        style="@style/Text16_black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/highTemp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="20" />
 </androidx.constraintlayout.widget.ConstraintLayout>

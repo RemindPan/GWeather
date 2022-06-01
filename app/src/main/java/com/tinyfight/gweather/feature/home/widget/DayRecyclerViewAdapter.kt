@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tinyfight.gweather.R
 import com.tinyfight.gweather.common.base.ViewBindingViewHolder
 import com.tinyfight.gweather.common.base.getViewHolder
-import com.tinyfight.gweather.data.model.DailyWeatherDisplayVO
+import com.tinyfight.gweather.data.displaymodel.DailyWeatherDisplayVO
 import com.tinyfight.gweather.databinding.ItemDayWeatherBinding
 import com.tinyfight.gweather.feature.util.getString
 import com.tinyfight.gweather.feature.util.mapIconToDrawable
@@ -19,7 +19,7 @@ import com.tinyfight.gweather.feature.util.mapIconToDrawable
 @SuppressLint("NotifyDataSetChanged")
 class DayRecyclerViewAdapter :
     RecyclerView.Adapter<ViewBindingViewHolder<ItemDayWeatherBinding>>() {
-    var dailyWeatherList: List<DailyWeatherDisplayVO> = listOf()
+    var dailyWeatherDisplayList: List<DailyWeatherDisplayVO> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -37,7 +37,7 @@ class DayRecyclerViewAdapter :
         position: Int,
     ) {
         if (position in 0..itemCount) {
-            val item = dailyWeatherList[position]
+            val item = dailyWeatherDisplayList[position]
             holder.binding.day.text = item.day
             holder.binding.highTemp.text =
                 getString(R.string.high_temperature, item.highTemperature.toString())
@@ -48,5 +48,5 @@ class DayRecyclerViewAdapter :
 
     }
 
-    override fun getItemCount() = dailyWeatherList.size
+    override fun getItemCount() = dailyWeatherDisplayList.size
 }

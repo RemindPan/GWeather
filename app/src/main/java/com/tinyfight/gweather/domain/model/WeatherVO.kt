@@ -11,11 +11,11 @@ import com.google.gson.annotations.SerializedName
 data class WeatherResponseVO(
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
+    val timeZone: String = "",
     val currently: HourlyWeatherVO? = null,
     val minutely: MinutelyVO? = null,
     val hourly: HourlyVO? = null,
     val daily: DailyVO? = null,
-    val alerts: List<AlertVO>? = null,
 ) : VO
 
 /**
@@ -132,6 +132,7 @@ data class DailyWeatherVO(
     val apparentTemperatureMaxTime: Long = 0,
 ) : VO
 
+@Suppress("unused")
 data class AlertVO(
     val title: String = "",
     val time: Long = 0,

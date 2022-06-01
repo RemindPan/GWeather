@@ -1,4 +1,4 @@
-package com.tinyfight.gweather.data.model
+package com.tinyfight.gweather.data.displaymodel
 
 import com.tinyfight.gweather.data.util.timeStampToMinute
 import com.tinyfight.gweather.domain.model.HourlyWeatherVO

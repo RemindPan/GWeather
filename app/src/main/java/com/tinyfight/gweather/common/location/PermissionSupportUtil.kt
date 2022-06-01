@@ -2,15 +2,11 @@ package com.tinyfight.gweather.common.location
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.provider.Settings
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.tinyfight.gweather.GWeatherApplication
-import com.tinyfight.gweather.common.Callback1
 
 /**
  * Create at 2022/5/31
@@ -18,7 +14,7 @@ import com.tinyfight.gweather.common.Callback1
  * Name com.tinyfight.gweather.common.PermissionSuppportUtil
  */
 
-fun Fragment.isGPSOpen(): Boolean {
+fun isGPSOpen(): Boolean {
     val locationManager =
         GWeatherApplication.application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)

@@ -1,14 +1,18 @@
 package com.tinyfight.gweather.common.base
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewbinding.ViewBinding
+import com.tinyfight.gweather.GWeatherApplication
 import com.tinyfight.gweather.R
+import com.tinyfight.gweather.common.location.LocationSupport
+import com.tinyfight.gweather.common.location.OneTimeLocationListener
 import com.tinyfight.gweather.common.location.hasLocationPermission
 import com.tinyfight.gweather.common.location.isGPSOpen
 import com.tinyfight.gweather.common.widget.LocationDialogFragment
@@ -20,10 +24,8 @@ import com.tinyfight.gweather.common.widget.LocationDialogFragment
  */
 abstract class LocationFragment<VB : ViewBinding> : ViewBindingFragment<VB>() {
 
-    private val openGpsRegister =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            onGPSSettingCallback(it.resultCode)
-        }
+    private val locationListener = OneTimeLocationListener(::onLocationRequested)
+    private var firstStart = true
 
     private val requestLocationPermissionRegister =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -35,7 +37,20 @@ abstract class LocationFragment<VB : ViewBinding> : ViewBindingFragment<VB>() {
         requestLocation()
     }
 
-    protected fun requestLocation() {
+    override fun onStart() {
+        super.onStart()
+        if (!firstStart) {
+            requestLocation()
+        }
+        firstStart = false
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocationSupport.instance.removeListener(locationListener)
+    }
+
+    private fun requestLocation() {
         checkGPSStatus()
     }
 
@@ -55,13 +70,6 @@ abstract class LocationFragment<VB : ViewBinding> : ViewBindingFragment<VB>() {
         }
     }
 
-    private fun onGPSSettingCallback(result: Int) {
-        requestPermission()
-//        if (result == Activity.RESULT_OK) {
-//            requestPermission()
-//        }
-    }
-
     private fun onRequestLocationPermissionCallback(result: Boolean) {
         if (result) {
             onLocationPermissionGranted()
@@ -74,11 +82,19 @@ abstract class LocationFragment<VB : ViewBinding> : ViewBindingFragment<VB>() {
         val intent = Intent().apply {
             action = Settings.ACTION_LOCATION_SOURCE_SETTINGS
         }
-        openGpsRegister.launch(intent)
+        startActivity(intent)
     }
 
     private fun requestLocationPermission() {
         requestLocationPermissionRegister.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
+
+    private fun gotoAppDetailSetting() {
+        val intent = Intent().apply {
+            action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+            data = Uri.parse("package:${GWeatherApplication.application.packageName}")
+        }
+        startActivity(intent)
     }
 
     private fun showGPSOpenDialog() {
@@ -92,9 +108,17 @@ abstract class LocationFragment<VB : ViewBinding> : ViewBindingFragment<VB>() {
         LocationDialogFragment.Builder.newBuilder()
             .title(getString(R.string.location_permission_error_title))
             .subTitle(getString(R.string.location_permission_error_sub_title)).confirmCallback {
-                requestLocationPermission()
+                gotoAppDetailSetting()
             }.build().show(childFragmentManager, LocationDialogFragment.TAG)
     }
 
-    abstract fun onLocationPermissionGranted()
+    private fun onLocationRequested(location: Location) {
+        onLocationRequestAction(location)
+    }
+
+    private fun onLocationPermissionGranted() {
+        LocationSupport.instance.getLocation(locationListener)
+    }
+
+    abstract fun onLocationRequestAction(location: Location)
 }

@@ -3,11 +3,10 @@ package com.tinyfight.gweather.feature.home.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tinyfight.gweather.data.model.HomeDisplayVO
-import com.tinyfight.gweather.data.model.fromDailyWeatherVOToDisplayVO
-import com.tinyfight.gweather.data.model.fromWeatherVOToCurrentWeatherDisplayVO
+import com.tinyfight.gweather.data.displaymodel.HomeDisplayVO
+import com.tinyfight.gweather.data.displaymodel.fromDailyWeatherVOToDisplayVO
+import com.tinyfight.gweather.data.displaymodel.fromWeatherVOToCurrentWeatherDisplayVO
 import com.tinyfight.gweather.data.network.Result
-import com.tinyfight.gweather.domain.model.DailyVO
 import com.tinyfight.gweather.domain.repository.home.HomeRepository
 import kotlinx.coroutines.launch
 
@@ -20,10 +19,19 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     val dailyWeatherLiveData = MutableLiveData<HomeDisplayVO?>()
     val loadingLiveData = MutableLiveData<Boolean>()
 
+    private fun showLoading() {
+        loadingLiveData.value = true
+    }
+
+    private fun hideLoading() {
+        loadingLiveData.value = false
+    }
+
     fun getWeatherByLocation(
         latitude: Double,
         longitude: Double,
     ) {
+        showLoading()
         viewModelScope.launch {
             val result = homeRepository.getWeatherByLocation(latitude, longitude)
             if (result is Result.Success) {
@@ -45,11 +53,11 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                         dailyWeatherDisplayVOList[0]
                     )
                 )
-
                 dailyWeatherLiveData.value = displayVO
             } else {
                 dailyWeatherLiveData.value = null
             }
+            hideLoading()
         }
     }
 }
