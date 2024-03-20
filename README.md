@@ -1,6 +1,6 @@
 ## GWeather
 
-* This is a assignment weather demo app.
+* A weather demo app.
 * Apply clean architecture + MVVM as project architecture
 
 ### Architecture
@@ -12,7 +12,7 @@ feature -> common
 
 ### Statement
 
-* This is a weather app depend on location service
+* This is a demo weather app depend on location service
 * Home page will show weather of current time and following days
 * Detail page will show following hours weather(exclude time before current hour)
 * Domain package should be a pure kotlin/java package which will not depend on any Android os api and just define the declear for server data and repositories interfaces.
